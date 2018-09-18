@@ -1,6 +1,6 @@
-###javascript整理
+### javascript整理
 ***
-####addLoadEvent
+#### addLoadEvent
 页面加载完成后执行 `func` 函数
 ```javascript
 function addLoadEvent(func) {
@@ -17,7 +17,7 @@ function addLoadEvent(func) {
 
 addLoadEvent(func)
 ```
-####insertBefore
+#### insertBefore
 把一个新元素插入到一个现有元素的前面
 * 新元素：想插入的元素 `newElement`
 * 目标元素：想把这个新元素插入到哪个元素 `targetElement` 之前
@@ -26,7 +26,7 @@ addLoadEvent(func)
 parentElement.insertBefore(newElement, targetElement);
 ```
 
-####insertAfter
+#### insertAfter
 把一个新元素插入到一个现有元素的前面 (自定义方法)
 ```javascript
 function insertAfter(newElement, targetElement) {
@@ -39,7 +39,7 @@ function insertAfter(newElement, targetElement) {
   }
 }
 ```
-####getNextElement
+#### getNextElement
 获取下一个元素节点
 ```javascript
 function getNextElement(node) {
@@ -52,7 +52,7 @@ function getNextElement(node) {
   return null;
 }
 ```
-####addClass
+#### addClass
 添加class
 ```javascript
 function addClass(element, class) {
@@ -64,7 +64,7 @@ function addClass(element, class) {
   }
 }
 ```
-####label语句
+#### label语句
 加标签的语句一般都要与 for 语句等循环语句配合使用。由 break 或 continue 语句引用
 ```javascript
 label: statement
@@ -91,7 +91,7 @@ for (var i = 0; i < 10; i++) {
 }
 console.log(num) //95
 ```
-####Array
+#### Array
 ```javascript
 //监测数组 instanceof  Array.isArray()
 /*
@@ -257,4 +257,19 @@ alert(mapResult);  //[2,4,6,8,10,8,6,4,2]
 numbers.forEach(function(item, index, array){
   //执行某些操作
 });
+
+--------------------------------------------
+
+//归并方法
+//reduce() reduceRight() 都会迭代数组的所有项，然后构建一个最终返回的值
+var values = [1,2,3,4,5];
+var reduceSum = values.reduce(function(prev, cur, index, array){
+  return prev + cur; //(prev:1,cur:2) (prev:3,cur:3) (prev:6,cur:4) (prev:10,cur:5)
+});
+console.log(reduceSum);  //15
+
+var reduceRightSum = values.reduceRight(function(prev, cur, index, array){
+  return prev + cur; //(prev:5,cur:4) (prev:9,cur:3) (prev:12,cur:2) (prev:14,cur:1)
+});
+console.log(reduceRightSum);  //15
 ```
