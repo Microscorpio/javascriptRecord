@@ -273,3 +273,169 @@ var reduceRightSum = values.reduceRight(function(prev, cur, index, array){
 });
 console.log(reduceRightSum);  //15
 ```
+### 函数内部属性
+函数内部，有两个特殊对象`arguments`和`this`
+```javascript
+//arguments 的主要用途是保存函数参数，但这个对象还有一个名叫 callee 的属性，该属性是一个指针，指向拥有这个 arguments 对象的函数
+//阶乘函数
+function factorial(num) {
+  if (num <= 1) {
+    return 1;
+  } else {
+    return num * factorial(num-1);
+  }
+}
+等同于
+function factorial(num) {
+  if (num <=1 ) {
+    return 1;
+  } else {
+    return num * arguments.callee(num-1);
+  }
+}
+
+//this引用的是函数据以执行的环境对象——或者也可以说是 this 值（当在网页的全局作用域中调用函数时，this 对象引用的就是 window）
+window.color = "red";
+var o = { color: "blue" };
+function sayColor(){
+  console.log(this.color);
+}
+sayColor();  //red   this指向window
+o.sayColor = sayColor;
+o.sayColor();  //blue
+```
+### 函数属性和方法
+每个函数都包含两个属性：`length`和`prototype`
+`length`属性表示函数希望接受的命名参数的个数
+```javascript
+function sayName(name) {
+  console.log(name);
+}
+function sum(num1, num2) {
+  console.log(num1 + num2);
+}
+function sayHi() {
+  console.log("hi");
+}
+console.log(sayName.length);  //1
+console.log(sum.length);  //2
+console.log(sayHi.length);  //0
+```
+`prototype`是保存所有实例方法的真正所在
+每个函数都包含两个非继承而来的方法：`apply()`和`call()`
+#### apply
+`apply()`方法接受两个参数：一个是在其中运行函数的作用域，另一个是参数数组。
+其中，第二个参数可以是`Array`的实例，也可以是`arguments`对象
+```javascript
+function sum(num1 + num2) {
+  return num1 + num2;
+}
+function callSum1(num1 + num2) {
+  return sum.apply(this, arguments);
+}
+function callSum2(num1 + num2) {
+  return sum.apply(this, [num1, num2]);
+}
+console.log(callSum1(10,10));  //20
+console.log(callSum2(10,10));  //20
+```
+#### call
+`call()`与`apply()`的作用相同，区别仅在于接收参数的方式不同。对于`call()`方法而言，第一个参数是 this 值没有变化，变化的是其余参数都直接传递给函数
+```javascript
+function sum(num1 + num2) {
+  return num1 + num2;
+}
+function callSum(num1 + num2) {
+  return sum.call(this, num1, num2);  //必须明确地传入每一个参数
+}
+console.log(callSum(10,10));  //20
+```
+`call()`和`apply()`真正强大的地方是能够扩充函数赖以运行的作用域。
+```javascript
+window.color = 'red';
+var o = {color: 'blue'};
+function sayColor() {
+  console.log(this.color);
+}
+sayColor();  //red
+sayColor.call(this);  //red
+sayColor.call(window);  //red
+sayColor.call(o);  //blue  此时函数体内的 this 对象指向了 o
+```
+#### bind
+`bind()`方法会创建一个函数的实例，其 this 值会被绑定到传给 bind()函数的值。
+```javascript
+window.color = "red";
+var o = { color: "blue" };
+function sayColor(){
+  console.log(this.color);
+}
+var objectSayColor = sayColor.bind(o);
+objectSayColor();  //blue
+```
+#### string
+字符串操作方法：`concat()` `slice()` `substr()` `subString()`
+```javascript
+//concat()将一或多个字符串拼接起来，返回拼接得到的新字符串。
+var stringValue = "hello ";
+var result = stringValue.concat("world");
+var result2 = stringValue.concat("world", "!");
+console.log(result);  //"hello world"
+console.log(result2);  //"hello world!"
+console.log(stringValue);  //"hello"
+
+//slice()、 substr()和 substring() 都会返回被操作字符串的一个子字符串，而且也都接受一或两个参数。
+//slice()和substring()的第二个参数指定的是子字符串最后一个字符后面的位置。而 substr()的第二个参数指定的则是返回的字符个数。
+var stringValue = "hello world";
+console.log(stringValue.slice(3));  //"lo world"
+console.log(stringValue.substring(3));  //"lo world"
+console.log(stringValue.substr(3));  //"lo world"
+console.log(stringValue.slice(3, 7));  //"lo w"
+console.log(stringValue.substring(3,7));  //"lo w"
+console.log(stringValue.substr(3, 7));  //"lo worl"  substr第二个参数指定的是要返回的字符个数
+//参数是负值
+var stringValue = "hello world";
+console.log(stringValue.slice(-3));  //"rld"
+console.log(stringValue.substring(-3));  //"hello world"
+console.log(stringValue.substr(-3));  //"rld"
+console.log(stringValue.slice(3, -4));  //"lo w"
+console.log(stringValue.substring(3, -4));  //"hel"
+console.log(stringValue.substr(3, -4));  //""（空字符串）
+```
+`trim()`方法。创建一个字符串的副本，删除前置及后缀的所有空格，然后返回结果。
+```javascript
+var stringValue = " hello world ";
+var trimmedStringValue = stringValue.trim();
+console.log(stringValue); //" hello world "
+console.log(trimmedStringValue); //"hello world"
+```
+#### Math对象
+`min()`和`max()`方法
+```javascript
+var max = Math.max(3, 54, 32, 16);
+console.log(max); //54
+var min = Math.min(3, 54, 32, 16);
+console.log(min); //3
+//也可以使用apply()方法
+var values = [1,2,3,4,5,6,7];
+var max = Math.max.apply(Math, values); //把 Math 对象作为 apply()的第一个参数，从而正确地设置 this 值
+console.log(max);  //7
+```
+`Math.ceil()` `Math.floor()`和`Math.round()`方法
+* Math.ceil()执行向上舍入，即它总是将数值向上舍入为最接近的整数；
+* Math.floor()执行向下舍入，即它总是将数值向下舍入为最接近的整数；
+* Math.round()执行标准舍入，即它总是将数值四舍五入为最接近的整数。
+```javascript
+console.log(Math.ceil(25.9));  //26
+console.log(Math.ceil(25.5));  //26
+console.log(Math.ceil(25.1));  //26
+
+console.log(Math.round(25.9));  //26
+console.log(Math.round(25.5));  //26
+console.log(Math.round(25.1));  //25
+
+console.log(Math.floor(25.9));  //25
+console.log(Math.floor(25.5));  //25
+console.log(Math.floor(25.1));  //25
+```
+`random()`方法返回大于等于 0 小于 1 的一个随机数
