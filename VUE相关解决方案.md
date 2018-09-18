@@ -1,14 +1,9 @@
-项目所用到的技术：（各个技术所用到的版本号查看package.json）
 1. vue : https://cn.vuejs.org/
 2. vue-router :  http://router.vuejs.org/zh-cn/api/router-link.html
 3. vue-resource : 传参数用params 官网https://github.com/pagekit/vue-resource
 4. ui库（ElementUI）：http://element.eleme.io/#/zh-CN/component/installation
-5. 字体图标库（阿里图标库）： http://www.iconfont.cn/   892425640@qq.com  tycc..1993
-   [没有版本号，是从阿里图标库中直接下载下来手动放到src/assets/font]
-6.我们还使用了ElementUI的主题配置（改变ElementUI的主题颜色只需要执行命令就行）
+6. 使用了ElementUI的主题配置（改变ElementUI的主题颜色只需要执行命令就行）
 ：http://element.eleme.io/#/zh-CN/component/custom-theme
-7.src/assets/common.less里面设置了我们自己项目的主题颜色
-项目相关描述：（默认去首页是在src/pages/content.vue设置的重定向）
 1. 安装淘宝镜像  npm install -g cnpm --registry=https://registry.npm.taobao.org （cnpm install安装依赖速度比npm install快）
 2. http://cn.vuejs.org/v2/guide/installation.html                vue自定义项目的脚手架命令行工具安装
 3. http://blog.csdn.net/u013778905/article/details/53864289         项目结构说明
@@ -26,11 +21,11 @@
 12. 安装基于Chrome的devtools http://www.cnblogs.com/lolDragon/p/6268345.html
 13. 打包到生产环境后的manifest.js vendor.js app.js的解说：
   https://segmentfault.com/q/1010000009276145/a-1020000009279643
- 14. 生产环境环境和测试环境接口请求对应配置：
+14. 生产环境环境和测试环境接口请求对应配置：
  http://blog.csdn.net/fungleo/article/details/54574049
- 15.        .editorconfig文件 => 该文件定义项目的编码规范，编辑器的行为会与.editorconfig 文件中定义的一致，并且其优先级比
+15. .editorconfig文件 => 该文件定义项目的编码规范，编辑器的行为会与.editorconfig 文件中定义的一致，并且其优先级比
     编辑器自身的设置要高，这在多人合作开发项目时十分有用而且必要。
-
+```javascript
     root = true
 
     [*]    // 对所有文件应用下面的规则
@@ -39,28 +34,20 @@
     indent_size = 2                    // 缩进数量为2个空格
     end_of_line = lf                   // 换行符格式
     insert_final_newline = true        // 是否在文件的最后插入一个空行
-    trim_trailing_whitespace = true    // 是否删除行尾的空格
-16. webstorm的node_modules忽略打开：http://www.cnblogs.com/chengwb/p/6183440.html
-
-
-
+    trim_trailing_whitespace = true    // 是否删除行尾的空格]
+```
+16. webstorm的node_modules忽略打开：
+http://www.cnblogs.com/chengwb/p/6183440.html
+***
 Title: 我眼中的Vue。
-Vote:1
-Comment:0条评论
 https://zhuanlan.zhihu.com/p/30620860
-================ 
-Title: 有没有前端大佬，帮忙看个问题。???
-Vote:1
-Comment:0条评论
+***
+Title: 有没有前端大佬，帮忙看个问题。
 https://www.zhihu.com/question/263827671/answer/273420037
-================ 
-Title: 天了噜，程序猿要毁童年了！
-Vote:46
-Comment:​14 条评论
+***
+Title: 天了噜，程序猿要毁童年了。
 https://zhuanlan.zhihu.com/p/25993645
-================ 
+***
 Title: 学Python Django学得很迷茫，怎么办？
-Vote:2
-Comment:0条评论
 https://www.zhihu.com/question/26235428/answer/227096890
-================ 
+***
