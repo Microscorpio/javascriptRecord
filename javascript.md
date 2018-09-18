@@ -238,7 +238,7 @@ var everyResult = numbers.every(function(item,index,array){
 });
 console.log(everyResult)  //false  每一项都返回 true，则返回 true。
 
-var someResult = numbers.some(function(item.index.array){
+var someResult = numbers.some(function(item,index,array){
   return item > 2;
 });
 console.log(someResult)  //true  对任一项返回 true，则返回 true。
