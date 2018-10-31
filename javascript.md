@@ -410,7 +410,8 @@ console.log(stringValue); //" hello world "
 console.log(trimmedStringValue); //"hello world"
 ```
 #### Math对象
-`min()`和`max()`方法
+`min()` 和 `max()` 方法
+
 ```javascript
 var max = Math.max(3, 54, 32, 16);
 console.log(max); //54
@@ -425,6 +426,7 @@ console.log(max);  //7
 * Math.ceil()执行向上舍入，即它总是将数值向上舍入为最接近的整数；
 * Math.floor()执行向下舍入，即它总是将数值向下舍入为最接近的整数；
 * Math.round()执行标准舍入，即它总是将数值四舍五入为最接近的整数。
+
 ```javascript
 console.log(Math.ceil(25.9));  //26
 console.log(Math.ceil(25.5));  //26
@@ -445,6 +447,7 @@ console.log(Math.floor(25.1));  //25
 `window.location` 和 `document.location` 引用的是同一个对象。
 
 `location`对象所有属性
+
 | 属性名 | 例子 | 说明 |
 | ------ | ------ | ------ |
 | `location.hash` | "#contents" | 返回URL中的hash(#后跟零或多个字符)，如果URL中不包含散列，则返回空字符串 |
