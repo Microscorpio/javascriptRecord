@@ -439,3 +439,57 @@ console.log(Math.floor(25.5));  //25
 console.log(Math.floor(25.1));  //25
 ```
 `random()`方法返回大于等于 0 小于 1 的一个随机数
+
+#### location对象
+`location` 对象是很特别的一个对象，因为它既是 `window` 对象的属性，也是 `document` 对象的属性；
+`window.location` 和 `document.location` 引用的是同一个对象。
+
+`location`对象所有属性
+| 属性名 | 例子 | 说明 |
+| ------ | ------ | ------ |
+| `location.hash` | "#contents" | 返回URL中的hash(#后跟零或多个字符)，如果URL中不包含散列，则返回空字符串 |
+| `location.host` | "www.baidu.com:80" | 返回服务器名称个端口号(如果有) |
+| `location.hostname` | "www.baodu.com" | 返回不带端口号的服务器名称 |
+| `location.href` | "http://www.baidu.com" | 返回当前加载页面完整的URL(`location.toString()`方法也返回这个值) |
+| `location.pathname` | "/test/" | 返回URL中的目录和(或)文件名 |
+| `location.port` | "8080" | 返回URL中指定的端口号。如果不包含端口号则返回空字符串 |
+| `location.portocol` | "http:" | 返回页面使用的协议(http: 或 https:) |
+| `location.search` | "?keyword=test" | 返回URL的查询字符串。这个字符串以问好开头 |
+```javascript
+//假设初始 URL 为 http://www.wrox.com/WileyCDA/
+//将 URL 修改为"http://www.wrox.com/WileyCDA/#section1"
+location.hash = "#section1";
+//将 URL 修改为"http://www.wrox.com/WileyCDA/?q=javascript"
+location.search = "?q=javascript";
+//将 URL 修改为"http://www.yahoo.com/WileyCDA/"
+location.hostname = "www.yahoo.com";
+//将 URL 修改为"http://www.yahoo.com/mydir/"
+location.pathname = "mydir";
+//将 URL 修改为"http://www.yahoo.com:8080/WileyCDA/"
+location.port = 8080;
+
+//获取查询字符串(URL)参数
+function getQueryStringArgs(){
+  //取得查询字符串并去掉开头的问好
+  var qs = (location.search.length > 0 ? location.search.subString(1) : "");
+  //保存的对象
+  var args = {};
+  //取得每一项
+  var items = qs.length ? qs.split("&") : [];
+  var item = null, name = null, value = null, i = 0, len = items.length;
+  for (i=0; i < len; i++) {
+    item = items[i].split("=");
+    //decodeURIComponent解码查询字符串
+    name = decodeURIComponent(item[0]);
+    value = decodeURIComponent(item[1]);
+    if (name.length) {
+      args[name] = value;
+    }
+  }
+  return args;
+}
+//查询字符串是?q=javascript&num=10
+var args = getQueryStringArgs();
+console(args["q"]);  //"javascript"
+console(args["num"]);  //"10
+```
