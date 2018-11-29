@@ -496,3 +496,30 @@ var args = getQueryStringArgs();
 console(args["q"]);  //"javascript"
 console(args["num"]);  //"10
 ```
+
+#### DOM拓展
+选择符API核心方法(Selectors API Level 1)：`querySelector()`和`querySelectorAll()`,在兼容的浏
+览器中，可以通过`Document`及`Element`类型的实例调用它们。
+
+ `querySelector()`方法接受一个CSS选择符，返回与该模式匹配的第一个元素，没找到则返回`null`
+ ```javascript
+//取得body元素
+var body = document.querySelector('body');
+//取得ID为‘myDiv’的元素
+var myDiv = document.querySelector('#myDiv');
+//取得类为‘selected’的第一个元素
+var selected = document.querySelector('.selected');
+//取得类为'button'的第一个图像元素
+var img = document.querySelector('img.button');
+ ```
+ `querySelectorAll()`返回的是一个`NodeList`的实例,没找到则`NodeList`为空
+ ```javascript
+ //取得某<div>中的所有<em>元素（类似于 getElementsByTagName("em")）
+var ems = document.getElementById("myDiv").querySelectorAll("em");
+//取得类为"selected"的所有元素
+var selecteds = document.querySelectorAll(".selected");
+//取得所有<p>元素中的所有<strong>元素
+var strongs = document.querySelectorAll("p strong");
+ ```
+>(Selectors API Level 2)规范为`Element`类型新增了一个方法`matchesSelector()`,这个方法接收
+一个参数，即 CSS 选择符，如果调用元素与该选择符匹配，返回 true；否则，返回 false。
