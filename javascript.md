@@ -118,7 +118,7 @@ console.log(colors.join('||')) //red||green||blue
 --------------------------------------------
 
 //push() 添加到数组末尾，并返回数组长度
-var colors = new Arrar();
+var colors = new Array();
 var count = colors.push('red','green');
 console.log(count);   //2
 console.log(colors);  //['red','green']
@@ -178,6 +178,16 @@ console.log(values);  //[0,1,5,10,15]
 var colors = ['red','green','blue'];
 var colors2 = colors.concat('yellow',['black','brown']);
 console.log(colors2)  //['red','green','blue','yellow','black','brown']
+
+//数组完全展开
+function myFlat(arr) {
+  while (arr.some(t => Array.isArray(t))) {
+   	arr = ([]).concat.apply([], arr);
+  }
+  return arr;
+}
+var arrTest1 = [1, [2, 3, [4]], 5, 6, [7, 8], [[9, [10, 11], 12], 13], 14];  
+console.log(myFlat(arrTest1)) // Expected Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 --------------------------------------------
 
@@ -409,6 +419,24 @@ var trimmedStringValue = stringValue.trim();
 console.log(stringValue); //" hello world "
 console.log(trimmedStringValue); //"hello world"
 ```
+
+includes,startsWith,endsWith
+
+`str.includes(substr, pos)`取决于`str`是否包含`substr`来返回`true/false`
+```javascript
+//当需要测试匹配，这是正确的选择，但不需要它但位置
+console.log('Widget with id'.includes('Widget')) // true
+console.log('Hello'.includes('Bye')); // false
+
+//str.includes的第二个可选参数从以下位置开始搜索位置
+console.log('Widget'.includes('id')); // true
+console.log('Widget'.includes('id', 3)) // false，位置3没有‘id’
+```
+方法`str.startsWith`和`str.endsWith`完全按照它们所说的执行
+```javascript
+console.log('Widget'.startsWith('Wid')); // true，‘Widget’以‘Wid’开始
+console.log('Widget'.endsWith('get')); // true, ‘Widget’以'get'结束
+```
 #### Math对象
 `min()` 和 `max()` 方法
 
@@ -523,3 +551,207 @@ var strongs = document.querySelectorAll("p strong");
  ```
 >(Selectors API Level 2)规范为`Element`类型新增了一个方法`matchesSelector()`,这个方法接收
 一个参数，即 CSS 选择符，如果调用元素与该选择符匹配，返回 true；否则，返回 false。
+
+#### 数组解构
+```javascript
+//以下是将数组解构到变量中的一个例子：
+let arr = ['name1', 'name2']
+let [firstName, secondName] = arr
+console.log(firstName); // name1
+console.log(secondName); // name2
+
+//当与 split 函数（或其他返回值是数组的函数）结合使用时
+let [firstName, secondName] = 'name1 name2'.split(' ')
+console.log(firstName); // name1
+console.log(secondName); // name2
+
+//也可以在任何可迭代对象中使用，不仅仅是数组
+let [a, b, c] = "abc"; // ["a", "b", "c"]
+let [one, two, three] = new Set([1, 2, 3]);
+
+//一个对象的属性
+let user = {};
+[user.name, user.surname] = "Ilya Kantor".split(' ');
+console.log(user.name); // Ilya
+
+//可以使用 .entries() 方法和解构语法来遍历一个对象的键-值对
+let user = {
+    name: 'tim',
+    age: 30
+}
+
+for (let [key, value] of Object.entries(user)) {
+    console.log(key,': ', value)
+}
+
+//对于 map 对象也类似
+let user = new Map();
+user.set("name", "John");
+user.set("age", "30");
+
+for (let [key, value] of user.entries()) {
+  console.log(`${key}:${value}`); // name:John, then age:30
+}
+
+// 如果不仅要获得第一个值，还要将后续的所有元素也收集起来——我们可以使用三个点 "..." 加一个参数来接收“剩余的”元素：
+let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+console.log(name1); // Julius
+console.log(name2); // Caesar
+
+console.log(rest[0]); // Consul
+console.log(rest[1]); // of the Roman Republic
+console.log(rest.length); // 2
+//rest 变量的值就是数组中剩下的元素组成的数组。不一定要使用变量名 rest，也可以使用其他的变量名，只要确保它前面有三个点，并且在解构赋值的最后一个参数位置上就行了。
+```
+#### 对象解构 
+对象解构适用于对象
+```javascript
+//基本语法
+let {var1, var2} = {var1:…, var2…}
+
+//在等号右侧有一个已经存在的对象，我们想把它拆开到变量中。等号左侧包含了对象相应属性的一个“模式”。以下简单例子中就是 {...} 中一系列变量
+
+let options = {
+  title: "Menu",
+  width: 100,
+  height: 200
+};
+
+let {title, width, height} = options;
+
+console.log(title);  // Menu
+console.log(width);  // 100
+console.log(height); // 200
+
+//属性 options.title、options.width 和 options.height 的值被赋给了对应的变量。变量的顺序并不重要，以下的代码也奏效：
+// 改变 let {...} 中属性的顺序
+let {height, width, title} = { title: "Menu", height: 200, width: 100 }
+
+//等号左侧的模式可以更加复杂，并给属性和变量之间指定一个映射关系。
+
+//如果我们想把一个属性赋值给不同名字的变量，比如把 options.width 属性赋值给变量 w，那可以使用冒号来指定：
+let options = {
+  title: "Menu",
+  width: 100,
+  height: 200
+};
+
+// { 原属性：目标变量 }
+let {width: w, height: h, title} = options;
+
+// width -> w
+// height -> h
+// title -> title
+
+console.log(title);  // Menu
+console.log(w);      // 100
+console.log(h);      // 200
+
+//冒号表示了“什么值：赋值给谁”。以上的例子中就是属性 width 赋值给 w，属性 height 赋值给 h，属性 title 赋值给同名变量。
+
+//对于可能缺失的属性，我们可以使用 "=" 来指定默认值，如下：
+let options = {
+  title: "Menu"
+};
+
+let {width = 100, height = 200, title} = options;
+
+console.log(title);  // Menu
+console.log(width);  // 100
+console.log(height); // 200
+
+//也可以结合冒号和等号一起使用：
+let options = {
+  title: "Menu"
+};
+
+let {width: w = 100, height: h = 200, title} = options;
+
+console.log(title);  // Menu
+console.log(w);      // 100
+console.log(h);      // 200
+```
+
+#### 剩余操作符
+```javascript
+let options = {
+  title: "Menu",
+  height: 200,
+  width: 100
+};
+
+let {title, ...rest} = options;
+
+// now title="Menu", rest={height: 200, width: 100}
+console.log(rest.height);  // 200
+console.log(rest.width);   // 100
+```
+
+### JSON
+
+- **JSON.stringify 将对象转换为 JSON。**
+- **JSON.parse 将 JSON 转换回对象。**
+
+JSON.stringify 完整语法是：`let json = JSON.stringify(value[, replacer, space])`  
+**value**: 要编码的值  
+**replacer**: 要编码的属性数组或映射函数`function(key, value)`  
+**space**: 文本添加缩进、空格和换行符  
+大部分情况，JSON.stringify 仅与第一个参数一起使用。但是，如果我们需要微调替换过程，比如过滤掉循环引用，我们可以使用 JSON.stringify 的第二个参数。
+```javascript
+//如果我们传递一组属性给它，只有这一组属性会被编码
+
+let room = {
+  number: 23
+};
+
+let meetup = {
+  title: "Conference",
+  participants: [{name: "John"}, {name: "Alice"}],
+  place: room // meetup references room
+};
+
+room.occupiedBy = meetup; // room references meetup
+
+console.log( JSON.stringify(meetup, ['title', 'participants']) );
+// {"title":"Conference","participants":[{},{}]}
+
+//这里我们可能过于严格了。属性列表应用于整个对象结构。所以 participants 是空的，因为 name 不在列表中。
+
+//让我们包含除了会导致循环引用的 room.occupiedBy 之外的所有属性：
+
+let room = {
+  number: 23
+};
+
+let meetup = {
+  title: "Conference",
+  participants: [{name: "John"}, {name: "Alice"}],
+  place: room // meetup references room
+};
+
+room.occupiedBy = meetup; // room references meetup
+
+console.log( JSON.stringify(meetup, ['title', 'participants', 'place', 'name', 'number']) );
+/*
+{
+  "title":"Conference",
+  "participants":[{"name":"John"},{"name":"Alice"}],
+  "place":{"number":23}
+}
+*/
+```
+JSON.parse的完整语法：`let value = JSON.parse(str[, reviver]);`
+**str**: JSON字符串解析  
+**reviver**: 将为每个 (key,value) 对调用的可选函数（键，值）进行转换。
+```javascript
+//reviver用法
+let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+
+let meetup = JSON.parse(str, function(key, value) {
+  if (key == 'date') return new Date(value);
+  return value;
+});
+
+console.log( meetup.date.getDate() ); // now works!
+```
